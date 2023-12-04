@@ -34,7 +34,7 @@ var legend = L.imageOverlay('assets/plateia/legend.png', bounds).addTo(map);
 
 var countries = L.imageOverlay('assets/plateia/countries.png', bounds);
 var cities = L.imageOverlay('assets/plateia/cities.png', bounds);
-var manmadestruct = L.imageOverlay('assets/plateia/manmadestruct.png', bounds);
+var manmadestruct = L.imageOverlay('assets/plateia/manmadstruct.png', bounds);
 var geography = L.imageOverlay('assets/plateia/geography.png', bounds);
 
 var politicalOverlay = L.imageOverlay('assets/plateia/political.png', bounds);
@@ -103,10 +103,13 @@ function readdLayersOnTop(e) {
 var layerControl = L.control.layers(baseMaps, null).addTo(map);
 
 var placeholder = L.layerGroup();
+var placeholder1 = L.layerGroup();
+var placeholder2 = L.layerGroup();
+var placeholder3 = L.layerGroup();
 layerControl.addOverlay(placeholder, "Countries");
-layerControl.addOverlay(placeholder, "Cities");
-layerControl.addOverlay(placeholder, "Man Made Structure Facilities");
-layerControl.addOverlay(placeholder, "Enviroment Hazards");
+layerControl.addOverlay(placeholder1, "Cities");
+layerControl.addOverlay(placeholder2, "Manmade Structures & Facilities");
+layerControl.addOverlay(placeholder3, "Geography & Environmental Hazards");
 
 map.on('overlayadd', function (e) {
     if (e.name == "Countries") {
@@ -117,11 +120,11 @@ map.on('overlayadd', function (e) {
         cities.addTo(map);
         citiesOn = true;
     }
-    if (e.name == "Man Made Structure Facilities") {
+    if (e.name == "Manmade Structures & Facilities") {
         manmadestruct.addTo(map);
         manmadeStructOn = true;
     }
-    if (e.name == "Enviroment Hazards") {
+    if (e.name == "Geography & Environmental Hazards") {
         geography.addTo(map);
         geographyEnvOn = true;
     }
@@ -136,11 +139,11 @@ map.on('overlayremove', function (e) {
         map.removeLayer(cities);
         citiesOn = false;
     }
-    if (e.name == "Man Made Structure Facilities") {
+    if (e.name == "Manmade Structures & Facilities") {
         map.removeLayer(manmadestruct);
         manmadeStructOn = false;
     }
-    if (e.name == "Enviroment Hazards") {
+    if (e.name == "Geography & Environmental Hazards") {
         map.removeLayer(geography);
         geographyEnvOn = false;
     }
