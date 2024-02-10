@@ -42,6 +42,12 @@ var plateiaClick = function(event){
 };
 plateiaButton.on('click', plateiaClick);
 
+var vasatiButton = L.circle([596, 437], {radius: 11, stroke: false, fillOpacity:0}).addTo(map);
+
+var vasatiClick = function(event){
+	window.location.href = "vasati.html";
+};
+vasatiButton.on('click', vasatiClick);
 
 
 
@@ -102,5 +108,5 @@ function myFunction(name) {
 // function onMapClick(e) {
 //     alert("You clicked the map at " + e.latlng);
 // }
-//
-// map.on('click', onMapClick);
+
+ map.on('click', onMapClick);
