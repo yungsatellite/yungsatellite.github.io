@@ -35,7 +35,12 @@ var stations = L.imageOverlay('assets/solar/stations.png', bounds);
 var colonies = L.imageOverlay('assets/solar/countries_colonies.png', bounds);
 var planets = L.imageOverlay('assets/solar/planets.png', bounds);
 
+var plateiaButton = L.circle([597, 307], {radius: 17, stroke: false, fillOpacity:0}).addTo(map);
 
+var plateiaClick = function(event){
+	window.location.href = "plateia.html";
+};
+plateiaButton.on('click', plateiaClick);
 
 
 
