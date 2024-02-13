@@ -50,6 +50,13 @@ var vasatiClick = function(event){
 vasatiButton.on('click', vasatiClick);
 
 
+var lunaButton = L.circle([596, 344], {radius: 5, stroke: false, fillOpacity:0}).addTo(map);
+
+var lunaClick = function(event){
+	window.location.href = "luna.html";
+};
+lunaButton.on('click', lunaClick);
+
 
 map.fitBounds(bounds);
 
