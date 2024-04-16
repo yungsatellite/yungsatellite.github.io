@@ -50,6 +50,27 @@ var vasatiClick = function(event){
 vasatiButton.on('click', vasatiClick);
 
 
+var apasonButton = L.circle([204.17, 335], {radius: 5, stroke: false, fillOpacity:0}).addTo(map);
+
+var apasonClick = function(event){
+	window.location.href = "apason.html";
+};
+apasonButton.on('click', apasonClick);
+
+var danavusButton = L.circle([596, 872], {radius: 4, stroke: false, fillOpacity:0}).addTo(map);
+
+var danavusClick = function(event){
+	window.location.href = "danavus.html";
+};
+danavusButton.on('click', danavusClick);
+
+var sophiaButton = L.circle([596, 214], {radius: 15, stroke: false, fillOpacity:0}).addTo(map);
+
+var sophiaClick = function(event){
+	window.location.href = "sophia.html";
+};
+sophiaButton.on('click', sophiaClick);
+
 var lunaButton = L.circle([596, 344], {radius: 5, stroke: false, fillOpacity:0}).addTo(map);
 
 var lunaClick = function(event){
