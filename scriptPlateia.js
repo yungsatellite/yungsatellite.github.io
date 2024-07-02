@@ -30,6 +30,7 @@ var bounds = [
 ];
 
 var image = L.imageOverlay('assets/plateia/map.png', bounds).addTo(map);
+
 var legend = L.imageOverlay('assets/plateia/legend.png', bounds).addTo(map);
 
 var countries = L.imageOverlay('assets/plateia/countries.png', bounds);
@@ -44,6 +45,11 @@ var geoOverlay = L.imageOverlay('assets/plateia/geo.png', bounds);
 
 
 map.fitBounds(bounds);
+map.setMaxBounds(bounds);
+
+var center = [bounds[1][0], bounds[0][1]];
+
+map.setView(center, 0.5);
 
 //disables panning outside map
 map.on('drag', function () {

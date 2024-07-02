@@ -31,6 +31,13 @@ var bounds = [
 
 var image = L.imageOverlay('assets/apason/combined.png', bounds).addTo(map);
 
+map.fitBounds(bounds);
+map.setMaxBounds(bounds);
+
+var center = [bounds[1][0], bounds[0][1]];
+
+map.setView(center, 1.1);
+
 var countries = L.imageOverlay('assets/apason/countries.png', bounds);
 var cities = L.imageOverlay('assets/apason/cities.png', bounds);
 var manmadestruct = L.imageOverlay('assets/apason/manmadestruct.png', bounds);

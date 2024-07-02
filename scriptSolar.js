@@ -1,5 +1,5 @@
 let config = {
-    minZoom: 1,
+    minZoom: -1,
     maxZoom: 18,
 };
 
@@ -32,7 +32,7 @@ map.setMaxBounds(bounds);
 
 var center = [bounds[1][0], bounds[0][1]];
 
-map.setView(center, config.minZoom);
+map.setView(center, 1);
 
 // Define other overlays
 var stations = L.imageOverlay('assets/solar/stations.png', bounds);
