@@ -1,140 +1,99 @@
-//basic map stuff
 let config = {
-    minZoom: 7,
+    minZoom: -1,
     maxZoom: 18,
 };
 
-var combined = L.tileLayer('combined', {
-    maxZoom: 19
-});
-
-var political = L.tileLayer('politicall', {
-    maxZoom: 19
-});
-
-var terrain = L.tileLayer('terrainn', {
-    maxZoom: 19
-});
-
-var map = L.map('map', {
-    crs: L.CRS.Simple,
-    minZoom: -5,
-    zoomDelta: 0.25,
-    zoomSnap: 0,
-    layers: [combined, political, terrain]
-});
+// Define tile layers
+var combined = L.tileLayer('combined', { maxZoom: 19 });
+var political = L.tileLayer('political', { maxZoom: 19 });
+var terrain = L.tileLayer('terrain', { maxZoom: 19 });
 
 var bounds = [
     [0, 0],
     [792, 1000]
 ];
 
+// Create map
+var map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: config.minZoom,
+    maxZoom: config.maxZoom,
+    zoom: 1,
+    zoomDelta: 0.25,
+    zoomSnap: 0,
+    layers: [combined] // Initial layer set to combined
+});
+
+// Add base image overlay
 var image = L.imageOverlay('assets/solar/solarmap.png', bounds).addTo(map);
 
+// Set the initial view to the top-left corner
+map.setView([0, 0], config.minZoom);
+
+// Define other overlays
 var stations = L.imageOverlay('assets/solar/stations.png', bounds);
 var colonies = L.imageOverlay('assets/solar/countries_colonies.png', bounds);
 var planets = L.imageOverlay('assets/solar/planets.png', bounds);
 
-var plateiaButton = L.circle([597, 307], {radius: 17, stroke: false, fillOpacity:0}).addTo(map);
+// Define and add buttons
+var buttons = [
+    { coords: [597, 307], radius: 17, url: "plateia.html" },
+    { coords: [596, 437], radius: 11, url: "vasati.html" },
+    { coords: [204.17, 335], radius: 5, url: "apason.html" },
+    { coords: [596, 872], radius: 4, url: "danavus.html" },
+    { coords: [596, 214], radius: 15, url: "sophia.html" },
+    { coords: [596, 344], radius: 5, url: "luna.html" }
+];
 
-var plateiaClick = function(event){
-	window.location.href = "plateia.html";
-};
-plateiaButton.on('click', plateiaClick);
-
-var vasatiButton = L.circle([596, 437], {radius: 11, stroke: false, fillOpacity:0}).addTo(map);
-
-var vasatiClick = function(event){
-	window.location.href = "vasati.html";
-};
-vasatiButton.on('click', vasatiClick);
-
-
-var apasonButton = L.circle([204.17, 335], {radius: 5, stroke: false, fillOpacity:0}).addTo(map);
-
-var apasonClick = function(event){
-	window.location.href = "apason.html";
-};
-apasonButton.on('click', apasonClick);
-
-var danavusButton = L.circle([596, 872], {radius: 4, stroke: false, fillOpacity:0}).addTo(map);
-
-var danavusClick = function(event){
-	window.location.href = "danavus.html";
-};
-danavusButton.on('click', danavusClick);
-
-var sophiaButton = L.circle([596, 214], {radius: 15, stroke: false, fillOpacity:0}).addTo(map);
-
-var sophiaClick = function(event){
-	window.location.href = "sophia.html";
-};
-sophiaButton.on('click', sophiaClick);
-
-var lunaButton = L.circle([596, 344], {radius: 5, stroke: false, fillOpacity:0}).addTo(map);
-
-var lunaClick = function(event){
-	window.location.href = "luna.html";
-};
-lunaButton.on('click', lunaClick);
-
-
-map.fitBounds(bounds);
-
-//disables panning outside map
-map.on('drag', function () {
-    map.panInsideBounds(bounds, {animate: false});
+buttons.forEach(button => {
+    var circle = L.circle(button.coords, { radius: button.radius, stroke: false, fillOpacity: 0 }).addTo(map);
+    circle.on('click', () => window.location.href = button.url);
 });
 
+// Disable panning outside map bounds
+map.on('drag', function () {
+    map.panInsideBounds(bounds, { animate: false });
+});
 
-//function that interacts with html elements to change
+// Layer controls
 var baseMaps = {
+    "Combined": combined,
+    "Political": political,
+    "Terrain": terrain
 };
 
+var overlays = {
+    "Colonies": colonies,
+    "Planets": planets,
+    "Stations": stations
+};
 
-var layerControl = L.control.layers(baseMaps, null).addTo(map);
-
-var placeholder = L.layerGroup();
-var placeholder1 = L.layerGroup();
-var placeholder2 = L.layerGroup();
-layerControl.addOverlay(placeholder, "Colonies");
-layerControl.addOverlay(placeholder1, "Planets");
-layerControl.addOverlay(placeholder2, "Stations");
+L.control.layers(baseMaps, overlays).addTo(map);
 
 map.on('overlayadd', function (e) {
-    if (e.name == "Colonies") {
-        colonies.addTo(map);
-    }
-    if (e.name == "Planets") {
-        planets.addTo(map);
-    }
-    if (e.name == "Stations") {
-        stations.addTo(map);
+    if (overlays[e.name]) {
+        overlays[e.name].addTo(map);
     }
 });
 
 map.on('overlayremove', function (e) {
-    if (e.name == "Colonies") {
-        map.removeLayer(colonies);
-    }
-    if (e.name == "Planets") {
-        map.removeLayer(planets);
-    }
-    if (e.name == "Stations") {
-        map.removeLayer(stations);
+    if (overlays[e.name]) {
+        map.removeLayer(overlays[e.name]);
     }
 });
-
 
 //function that interacts with html elements to change
 function myFunction(name) {
     document.getElementById("info").innerHTML = name;
 }
 
-// function that reveals coordinate of where you clicked,
-
 // function onMapClick(e) {
 //     alert("You clicked the map at " + e.latlng);
 // }
+// map.on('click', onMapClick);
 
- map.on('click', onMapClick);
+// Ensure the map is properly initialized
+map.whenReady(() => {
+    // Set the initial view to the top-left corner again to ensure it takes effect
+    map.setView([620, 355], 1);
+});
