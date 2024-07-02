@@ -20,23 +20,20 @@ html,
 @media screen and (min-width: 720px) {
     #map {
         margin-top: 1vh;
-        margin-left: calc((100vw / 2) - (90vh / 2));
         width: 90vh;
         height: 71.35vh;
     }
 }
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 101vw) {
     #map {
         margin-top: 0vh;
-
-        width: 100vw;
-        height: 100vw;
+        width: 99vw;
+        height: 78.75vw;
     }
 }
-@media screen and (max-height: 460px) {
+@media screen and (max-height: 100vw) {
     #map {
-        width: 100vw;
-        height: 100vw;
+        height: 78.75vw;
     }
 }
 #container{
