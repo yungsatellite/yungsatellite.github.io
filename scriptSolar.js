@@ -1,5 +1,5 @@
 let config = {
-    minZoom: -1,
+    minZoom: 1,
     maxZoom: 18,
 };
 
@@ -27,8 +27,12 @@ var map = L.map('map', {
 // Add base image overlay
 var image = L.imageOverlay('assets/solar/solarmap.png', bounds).addTo(map);
 
-// Set the initial view to the top-left corner
-map.setView([0, 0], config.minZoom);
+map.fitBounds(bounds);
+map.setMaxBounds(bounds);
+
+var center = [bounds[1][0], bounds[0][1]];
+
+map.setView(center, config.minZoom);
 
 // Define other overlays
 var stations = L.imageOverlay('assets/solar/stations.png', bounds);
@@ -91,9 +95,3 @@ function myFunction(name) {
 //     alert("You clicked the map at " + e.latlng);
 // }
 // map.on('click', onMapClick);
-
-// Ensure the map is properly initialized
-map.whenReady(() => {
-    // Set the initial view to the top-left corner again to ensure it takes effect
-    map.setView([620, 355], 1);
-});
